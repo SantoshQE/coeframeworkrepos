@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="4" time="73.871979">
+<testcase classname="Feature2 Automated Test" name="Feature2 functionality" time="18.013191">
+<system-out><![CDATA[Given user is on the google homepage........................................passed
+When the user enters the search text "Selenium".............................passed
+Then click on search and verify the search results retrieved by google......passed
+]]></system-out>
+</testcase>
+<testcase classname="Feature2 Automated Test" name="Feature2 functionality 2" time="19.577312">
+<system-out><![CDATA[Given user is on the google homepage........................................passed
+When the user enters the search text "Azure DevOps".........................passed
+Then click on search and verify the search results retrieved by google......passed
+]]></system-out>
+</testcase>
+<testcase classname="Google Search Automated Test" name="Verify google search functionality" time="18.151667">
+<system-out><![CDATA[Given user is on the google homepage........................................passed
+When the user enters the search text "UFT 12"...............................passed
+Then click on search and verify the search results retrieved by google......passed
+]]></system-out>
+</testcase>
+<testcase classname="Google Search Automated Test" name="Verify google search functionality 2" time="18.129809">
+<system-out><![CDATA[Given user is on the google homepage........................................passed
+When the user enters the search text "Postman"..............................passed
+Then click on search and verify the search results retrieved by google......passed
+]]></system-out>
+</testcase>
+</testsuite>
