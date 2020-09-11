@@ -60,10 +60,30 @@ public class LocalDriverBuilder
     }
 
     //To do implement IE driver
-    WebDriver getIEDriver()
+    WebDriver getIEDriver() throws IOException
     {
+        Runtime.getRuntime().exec("taskkill /F /IM iexplore.exe");
         WebDriver driver;
-        driver = new InternetExplorerDriver();
+        System.setProperty(IE_DRIVER_PROPERTY,  getConfiguration().getDriverPath());
+        InternetExplorerOptions IEOption =  new InternetExplorerOptions();
+        IEOption.ignoreZoomSettings();
+        IEOption.introduceFlakinessByIgnoringSecurityDomains();
+        IEOption.disableNativeEvents();
+        IEOption.requireWindowFocus();
+        IEOption.destructivelyEnsureCleanSession();
+        //IEOption.setCapability(InternetExplorerDriver.FORCE_CREATE_PROCESS, true);
+        IEOption.setCapability(InternetExplorerDriver.IE_SWITCHES, "-private");
+
+    /*
+        IEOption.disableNativeEvents();
+        IEOption.getVersion();
+        IEOption.getBrowserName();
+        IEOption.destructivelyEnsureCleanSession();*/
+        driver = new InternetExplorerDriver(IEOption);
+        driver.manage().deleteAllCookies();
+        System.out.println("Driver instance is  : " + driver.toString());
+        driver.manage().window().maximize();
+        // Press CTRL + 0 keys of keyboard to set IEDriver Instance zoom level to 100%.
         return driver;
     }
     //To do implement gecko driver
@@ -98,7 +118,15 @@ public class LocalDriverBuilder
         return driver;
     }
 
-
+    WebDriver getHeadlessChromeDriver()
+    {
+        WebDriver driver;
+        System.setProperty(CHROME_DRIVER_PROPERTY,  getConfiguration().getDriverPath());
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+        return driver;
+    }
 
     ConfigFileReader getConfiguration()
     {
