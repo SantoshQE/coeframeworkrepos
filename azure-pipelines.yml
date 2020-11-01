@@ -1,0 +1,47 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+  - none
+
+pool:
+  name: 'selfhostedagent1'
+
+steps:
+  - task: Maven@3
+    displayName: 'Run CARS UI Tests'
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'test -Ptest -Dtest=TestRunner -Pdev'
+      testResultsFiles: '**/cucumber-reports/Cucumber.xml'
+      testRunTitle: 'CARS UI Tests'
+    continueOnError: true
+
+  - task: PublishCucumberReport@1
+    displayName: 'Publish Cucumber Report'
+    inputs:
+      jsonDir: '**/target/cucumber-reports'
+      outputPath: '$(System.DefaultWorkingDirectory)'
+      metadata: |
+        {
+                    "Test Environment": "QA",
+                    "OS":"Windows 10",
+                    "Browser Version":"Internet Explorer",
+                    "Executed By":"Santosh"
+         }
+      name: 'Cucumber HTML Report'
+      title: 'Cucumber HTML Report - Bootstrap Theme'
+    enabled: true
+    continueOnError: true
+    condition: succeededOrFailed()
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: Test Run Results'
+    inputs:
+      PathtoPublish: '$(Agent.BuildDirectory)/s/target/cucumber-reports'
+      ArtifactName: 'Test Run Results'
+    enabled: true
+    continueOnError: true
+    condition: succeededOrFailed()
